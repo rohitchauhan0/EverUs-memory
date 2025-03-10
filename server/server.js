@@ -13,6 +13,8 @@ connectDB();
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
+const fileUpload= require('express-fileupload') 
+
 app.use(cors({
     origin: "*",
     credentials: true,
@@ -20,7 +22,17 @@ app.use(cors({
 
 // Routes
 const authRoutes = require('./routes/auth-routes');
+const postRoutes = require('./routes/post-route');
+
+app.use(fileUpload({
+    useTempFiles:true,
+    tempFileDir:"./temp"
+}))
+
+require('./config/cloudinary-connect').cloudinaryConnect();
+
 app.use("/api/auth", authRoutes);
+app.use("/api/posts", postRoutes);
 
 // Start Server
 const PORT = process.env.PORT || 3001;
