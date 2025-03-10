@@ -12,7 +12,7 @@ const SignUp = () => {
 
   const handleSignUp = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/auth/signin', {
+      const response = await fetch('https://everus-memory.onrender.com/api/auth/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

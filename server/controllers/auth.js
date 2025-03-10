@@ -2,7 +2,7 @@ const Auth = require('../models/auth');
 
  const SIGN_IN = async (req, res, next) => {
     try {
-        console.log("hi");
+    
         const { email, password } = req.body;
 
         if (!email || !password) {
@@ -11,10 +11,13 @@ const Auth = require('../models/auth');
         }
 
         const user = await Auth.findOne({ email });
-        if (!user) {
-            res.status(404).json({ message: 'User not found', success: false });
+        if (user) {
+            res.status(404).json({ message: 'User already present', success: false });
             return;
         }
+
+        const newUser = new Auth({ email, password });
+        await newUser.save();
 
         res.status(200).json({ message: 'Sign-in successful', success: true });
 
