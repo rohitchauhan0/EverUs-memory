@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = () => {
   const router = useRouter();
@@ -11,7 +12,20 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      console.log(form);
+      const response = await fetch('https://everus-memory.onrender.com/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+
+      const data = await response.json();
+      if (data.success && data.token) {
+        // Store token in AsyncStorage
+        await AsyncStorage.setItem('authToken', data.token);
+  
+        // Navigate to Home Screen
+        router.push('/(tabs)/home');
+      }
     } catch (error) {
       console.log(error);
     }

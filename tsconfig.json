@@ -14,5 +14,5 @@
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
     "nativewind-env.d.ts"
-, "server/config/db-connection.js", "server/controllers/auth.js", "server/models/auth.js", "server/routes/auth-routes.js"  ]
+, "server/config/db-connection.js", "server/controllers/auth.js", "server/models/auth.js", "server/routes/auth-routes.js", "server/utils/uploader.js"  ]
 }
