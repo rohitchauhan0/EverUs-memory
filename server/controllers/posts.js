@@ -53,4 +53,17 @@ const createPost = async (req, res) => {
     }
 };
 
-module.exports = { createPost };    
+const getPosts = async (req, res) => {
+    try {
+        const posts = await Post.find().populate({
+            path: "createdBy",
+            select: "name profilePic",
+        }).sort({ createdAt: -1 });
+        res.status(200).json({ message: "Posts fetched successfully", posts });
+    } catch (error) {
+        console.error("Error fetching posts:", error);
+        res.status(400).json({ message: "Error fetching posts", error });
+    }
+};
+
+module.exports = { createPost, getPosts };    
