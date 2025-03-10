@@ -1,4 +1,4 @@
-import { View, Text, TextInput, TouchableOpacity, Pressable } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Pressable, ActivityIndicator } from 'react-native';
 import React, { useState } from 'react';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -9,21 +9,25 @@ const SignUp = () => {
   const [form, setForm] = useState({ email: '', password: '', confirmPassword: '' });
   const [hidePassword, setHidePassword] = useState(true);
   const [hideConfirmPassword, setHideConfirmPassword] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const handleSignUp = async () => {
+    setLoading(true);
     try {
       const response = await fetch('https://everus-memory.onrender.com/api/auth/signin', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
-      })
+      });
+
       const data = await response.json();
-      console.log(data);
+      if (data.success) {
+        router.push('/(auth)/login');
+      }
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   };
 
   return (
@@ -79,18 +83,21 @@ const SignUp = () => {
         {/* Sign Up Button */}
         <TouchableOpacity
           onPress={handleSignUp}
-          className="bg-orange-500 py-4 rounded-xl shadow-lg active:scale-95"
+          className={`py-4 rounded-xl shadow-lg ${loading ? 'bg-gray-400' : 'bg-orange-500'} active:scale-95`}
+          disabled={loading}
         >
-          <Text className="text-center text-white text-lg font-semibold">Sign Up</Text>
+          {loading ? (
+            <ActivityIndicator size="small" color="#fff" />
+          ) : (
+            <Text className="text-center text-white text-lg font-semibold">Sign Up</Text>
+          )}
         </TouchableOpacity>
 
-        {/* Divider */}
-        
-        {/* Sign In with Google */}
-       
         {/* Login Redirect */}
         <TouchableOpacity onPress={() => router.push('/(auth)/login')} className="mt-6">
-          <Text className="text-center text-gray-600">Already have an account? <Text className="text-orange-500 font-bold">Login</Text></Text>
+          <Text className="text-center text-gray-600">
+            Already have an account? <Text className="text-orange-500 font-bold">Login</Text>
+          </Text>
         </TouchableOpacity>
       </View>
     </LinearGradient>
