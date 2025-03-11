@@ -6,7 +6,7 @@ import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 
 const SignUp = () => {
   const router = useRouter();
-  const [form, setForm] = useState({ email: '', password: '', confirmPassword: '' });
+  const [form, setForm] = useState({ email: '', password: '', name: '' });
   const [hidePassword, setHidePassword] = useState(true);
   const [hideConfirmPassword, setHideConfirmPassword] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -35,8 +35,21 @@ const SignUp = () => {
       <View className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
         <Text className="text-3xl font-bold text-center text-orange-500 mb-6">Create Account</Text>
 
+        <View className="flex-row items-center bg-gray-100 p-4 rounded-xl mb-6">
+          <Ionicons name="person" size={24} color="gray" />
+          <TextInput
+            placeholder="Enter username"
+            placeholderTextColor="gray"
+            className="flex-1 text-black ml-3"
+            value={form.name}
+            onChangeText={(text) => setForm({ ...form, name: text })}
+          />
+         
+        </View>
+
         {/* Email Input */}
         <View className="flex-row items-center bg-gray-100 p-4 rounded-xl mb-4">
+
           <MaterialIcons name="email" size={24} color="gray" />
           <TextInput
             placeholder="Enter your email"
@@ -65,20 +78,7 @@ const SignUp = () => {
         </View>
 
         {/* Confirm Password Input */}
-        <View className="flex-row items-center bg-gray-100 p-4 rounded-xl mb-6">
-          <Ionicons name="lock-closed" size={24} color="gray" />
-          <TextInput
-            placeholder="Confirm your password"
-            placeholderTextColor="gray"
-            className="flex-1 text-black ml-3"
-            secureTextEntry={hideConfirmPassword}
-            value={form.confirmPassword}
-            onChangeText={(text) => setForm({ ...form, confirmPassword: text })}
-          />
-          <Pressable onPress={() => setHideConfirmPassword(!hideConfirmPassword)}>
-            <Ionicons name={hideConfirmPassword ? "eye-off" : "eye"} size={24} color="gray" />
-          </Pressable>
-        </View>
+      
 
         {/* Sign Up Button */}
         <TouchableOpacity

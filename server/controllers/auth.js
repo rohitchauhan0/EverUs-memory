@@ -6,7 +6,7 @@ const express = require('express');
  const SIGN_IN = async (req, res, next) => {
     try {
     
-        const { email, password } = req.body;
+        const { email, password, name } = req.body;
 
         if (!email || !password) {
             res.status(400).json({ message: 'Email and password are required', success: false });
@@ -19,7 +19,7 @@ const express = require('express');
             return;
         }
 
-        const newUser = new Auth({ email, password });
+        const newUser = new Auth({ email, password, name });
         await newUser.save();
 
         res.status(200).json({ message: 'Sign-in successful', success: true });

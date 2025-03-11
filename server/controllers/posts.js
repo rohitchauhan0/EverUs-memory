@@ -57,7 +57,7 @@ const getPosts = async (req, res) => {
     try {
         const posts = await Post.find().populate({
             path: "createdBy",
-            select: "name profilePic",
+            select: "name email",
         }).sort({ createdAt: -1 });
         res.status(200).json({ message: "Posts fetched successfully", posts });
     } catch (error) {
