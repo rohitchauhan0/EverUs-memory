@@ -15,7 +15,7 @@ const Index = () => {
 
         {/* TouchableOpacity for custom navigation */}
         <TouchableOpacity 
-          onPress={() => router.push('/(auth)/signin')}
+          onPress={() => router.push('/(auth)/login')}
           className="bg-white py-3 px-10 mt-10 rounded-full"
         >
           <Text className="text-black font-bold text-lg text-center">Get Started</Text>

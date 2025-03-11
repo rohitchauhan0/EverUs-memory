@@ -118,6 +118,7 @@ const Posts = () => {
         } as any);
       }
 
+
       const token = await AsyncStorage.getItem("authToken");
 
       const response = await fetch("https://everus-memory.onrender.com/api/posts/posts", {
@@ -130,7 +131,6 @@ const Posts = () => {
       });
 
       const result = await response.json();
-      console.log("Upload Success:", result);
       Alert.alert("Success", "Post uploaded successfully!");
       
       // Reset states after successful upload
@@ -199,10 +199,12 @@ const Posts = () => {
                 <Text className="text-white ml-2">Add Video</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity className="items-center p-3 bg-purple-500 rounded-lg flex-row" onPress={pickMusic}>
-                <MaterialIcons name="library-music" size={20} color="white" />
-                <Text className="text-white ml-2">Add Music</Text>
-              </TouchableOpacity>
+              {
+                !videoUri && (<TouchableOpacity className="items-center p-3 bg-purple-500 rounded-lg flex-row" onPress={pickMusic}>
+                  <MaterialIcons name="library-music" size={20} color="white" />
+                  <Text className="text-white ml-2">Add Music</Text>
+                </TouchableOpacity>)
+              }
             </View>
           )}
 
@@ -219,7 +221,7 @@ const Posts = () => {
         </View>
 
         {!keyboardVisible && (
-          <View className="mb-5 flex-row justify-center bg-white">
+          <View className="mb-32 flex-row justify-center bg-white">
             <TouchableOpacity className="items-center bg-orange-500 rounded-lg px-20 py-5 flex-row" onPress={handlePost} disabled={loading}>
               {loading ? <ActivityIndicator color="white" /> : <MaterialIcons name="send" size={20} color="white" />}
               <Text className="text-white ml-2">{loading ? "Posting..." : "Post"}</Text>
